@@ -1,9 +1,6 @@
 import axios from 'axios';
 import { AuthCredentials, AuthResponse, ChannelResponse, RowData, UserResponse } from '../models/models';
 
-
-
-
 const API_URL = process.env.REACT_APP_API_URL;
 
 if (!API_URL) {
@@ -16,8 +13,7 @@ export const login = async (credentials: AuthCredentials): Promise<AuthResponse>
         login_id: credentials.login_id,
         password: credentials.password,
       });
-      
-      console.log(response.headers)
+    
       const token = response.headers['token']; // Assuming the token is in the 'Authorization' header
       if (!token) {
         throw new Error('Token not found in response headers');
@@ -42,7 +38,6 @@ export const login = async (credentials: AuthCredentials): Promise<AuthResponse>
         users.set(user.id,`${user.email}`);
       })
       const userCounts:Map<string,number> = new Map(); 
-      console.log(users);
       const channelsResponse = await axios.get(`${API_URL}/channels`, {headers});
       const channelIds = channelsResponse.data.map((c:ChannelResponse) => {
         return c.id;
@@ -54,9 +49,7 @@ export const login = async (credentials: AuthCredentials): Promise<AuthResponse>
           console.log(postsResponse);
           const posts = postsResponse.data.posts;
           for(const post_id of Object.keys(posts)) {
-              console.log(posts[post_id].user_id);
               userCounts.set(posts[post_id].user_id,(userCounts.get(posts[post_id].user_id)||0)+1);
-              console.log(userCounts.get(posts[post_id].user_id));
           };
         } catch(error) {
           console.log("Error getting post for channel id: ", id, "message: ", error);
@@ -64,11 +57,8 @@ export const login = async (credentials: AuthCredentials): Promise<AuthResponse>
         }
       }
 
-      console.log(userCounts);
-
       const data:RowData[] = []  
       users.forEach((name,user_id) => {
-        console.log(user_id);
         const user_entry:RowData = {
          user: name,
          interactions: userCounts.get(user_id) || 0
@@ -79,7 +69,7 @@ export const login = async (credentials: AuthCredentials): Promise<AuthResponse>
       return data
 
     } catch (error) {
-        console.log(error);
+        console.log("Fetching Failed: ", error);
         throw new Error('Fetching Failed');
     }
   };
