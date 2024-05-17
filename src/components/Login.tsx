@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../services/authService';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -14,10 +15,11 @@ const Login: React.FC = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Add your login logic here
-    console.log('Email:', email, 'Password:', password);
+    const response = await login({login_id: email, password: password});
+    sessionStorage.setItem('token',response.token);
     navigate('/home');
   };
 
