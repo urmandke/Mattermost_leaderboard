@@ -1,6 +1,6 @@
 # Getting Started
 
-This is a basic leaderboard applicaiton for Navicrator's mattermost instance. 
+This is a basic leaderboard React application for Navicrator's mattermost instance. 
 
 Please update the .env file if required.
 
