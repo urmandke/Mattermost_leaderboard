@@ -4,13 +4,9 @@ This is a basic leaderboard React application for Navicrator's mattermost instan
 
 Please update the .env file if required.
 
-Please install using `npm install`
+### Please install using `npm install`
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
+### Use `npm start`to setup dev server
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
